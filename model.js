@@ -8,119 +8,119 @@ new (function() {
     ext._shutdown = function() {
       // alert("该设备已卸载！");
     };
-    
+
     // // Status reporting code
     // // Use this to report missing hardware, plugin or unsupported browser
-    // ext._getStatus = function() {
-    //     return {status: 2, msg: 'Ready'};
-    // };
-    //
-    // ext.createCMD1 = function(name,action,pin,devId,callback) {
-    //     if(action=="开"){
-    //         action="on";
-    //     }
-    //     if(action=="关"){
-    //         action="off";
-    //     }
-    //     if(name=="继电器"){
-    //         name="relay";
-    //     }
-    //     if(name=="led灯"){
-    //         name="led";
-    //     }
-    //     if(name=="激光"){
-    //         name="laser";
-    //     }
-    //     if(action=="获取"){
-    //         action="get";
-    //     }
-    //     if(name=="土壤湿度"){
-    //         name="soilhumidity";
-    //     }
-    //     if(name=="火焰"){
-    //         name="flame";
-    //     }
-    //     if(name=="烟雾"){
-    //         name="mq5";
-    //     }
-    //     if(name=="光敏"){
-    //         name="lightsense";
-    //     }
-    //     if(name=="声音检测"){
-    //         name="sounddetect";
-    //     }
-    //     if(name=="人体接触"){
-    //         name="bodycontact";
-    //     }
-    //     if(name=="按键开关"||name=="水银开关"||name=="光遮断开关"||name=="倾斜开关"||name=="弹片开关"||name=="霍尔开关"){
-    //         name="digitalswitch";
-    //     }
-    //     if(name=="震动开关"||name=="敲击开关"){
-    //         name="vibrationswitch";
-    //     }
-    //     if(name=="温度"){
-    //         name="ds18b20";
-    //     }
-    //     if(name=="循迹"){
-    //         name="trace";
-    //     }
-    //     if(name=="避障"){
-    //         name="avoidblock";
-    //     }
-    //     var descrp=action+" "+pin;
-    //
-    //     console.log(name+descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(Math.round(answer));
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    // };
+    ext._getStatus = function() {
+        return {status: 2, msg: 'Ready'};
+    };
+
+    ext.createCMD1 = function(name,action,pin,devId,callback) {
+        if(action=="开"){
+            action="on";
+        }
+        if(action=="关"){
+            action="off";
+        }
+        if(name=="继电器"){
+            name="relay";
+        }
+        if(name=="led灯"){
+            name="led";
+        }
+        if(name=="激光"){
+            name="laser";
+        }
+        if(action=="获取"){
+            action="get";
+        }
+        if(name=="土壤湿度"){
+            name="soilhumidity";
+        }
+        if(name=="火焰"){
+            name="flame";
+        }
+        if(name=="烟雾"){
+            name="mq5";
+        }
+        if(name=="光敏"){
+            name="lightsense";
+        }
+        if(name=="声音检测"){
+            name="sounddetect";
+        }
+        if(name=="人体接触"){
+            name="bodycontact";
+        }
+        if(name=="按键开关"||name=="水银开关"||name=="光遮断开关"||name=="倾斜开关"||name=="弹片开关"||name=="霍尔开关"){
+            name="digitalswitch";
+        }
+        if(name=="震动开关"||name=="敲击开关"){
+            name="vibrationswitch";
+        }
+        if(name=="温度"){
+            name="ds18b20";
+        }
+        if(name=="循迹"){
+            name="trace";
+        }
+        if(name=="避障"){
+            name="avoidblock";
+        }
+        var descrp=action+" "+pin;
+
+        console.log(name+descrp);
+        $.ajax({
+                type:"POST",
+                url:"http://localhost:9000/api/scratch/scodeC",
+                dataType:"json",
+                data:{
+                    name:name,
+                    descrption:descrp,
+                    device_id:devId
+                },
+                success:function(data){
+                    console.log(data);
+                    var cmdId=data.data.id;
+                    var answer="";
+                    var status=0;
+                    var count=0;
+                    var timer=setInterval(function(){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                         async:false,
+                        dataType:"json",
+                        success:function(data){
+                            console.log(data);
+                            status=data.data.rows[0].status;
+                            answer=data.data.rows[0].answer;
+                            console.log(status);
+                        },
+                        error:function(jqXHR){
+                            console.log(jqXHR);
+                        }
+                    });
+                    count++;
+                    console.log(count);
+                    if(count>60){
+                        clearInterval(timer);
+                        answer="请求时间已超时！";
+                        console.log(timer);
+                        callback(answer);
+                    }
+                    if(status==1){
+                        clearInterval(timer);
+                        callback(Math.round(answer));
+                    }
+                },2000);
+                },
+                error:function(jqXHR){
+                    console.log(jqXHR);
+                    console.log(jqXHR.status);
+                }
+            });
+    };
     // ext.createCMD2 = function(name,action,zappername,buttonname,devId,callback) {
     //
     //     if(action=="发射"){
@@ -198,77 +198,77 @@ new (function() {
     //         });
     // };
     //
-    // ext.createCMD3 = function(name,action,pin,type,devId,callback) {
-    //
-    //     var descrp="";
-    //     if(action=="获取"){
-    //         action="get";
-    //     }
-    //     if(type=="温度"){
-    //         descrp=action+" "+pin+" 0";
-    //     }
-    //     if(type=="湿度"){
-    //         descrp=action+" "+pin+" 1";
-    //     }
-    //     if(name=="空气温湿度"){
-    //         name="dht";
-    //     }
-    //
-    //     // var descrp=JSON.stringify(descrp);
-    //     console.log(descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 //devicename=data.data.name;
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(Math.round(answer));
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    // };
+    ext.createCMD3 = function(name,action,pin,type,devId,callback) {
+
+        var descrp="";
+        if(action=="获取"){
+            action="get";
+        }
+        if(type=="温度"){
+            descrp=action+" "+pin+" 0";
+        }
+        if(type=="湿度"){
+            descrp=action+" "+pin+" 1";
+        }
+        if(name=="空气温湿度"){
+            name="dht";
+        }
+
+        // var descrp=JSON.stringify(descrp);
+        console.log(descrp);
+        $.ajax({
+                type:"POST",
+                url:"http://localhost:9000/api/scratch/scodeC",
+                dataType:"json",
+                data:{
+                    name:name,
+                    descrption:descrp,
+                    device_id:devId
+                },
+                success:function(data){
+                    console.log(data);
+                    //devicename=data.data.name;
+                    var cmdId=data.data.id;
+                    var answer="";
+                    var status=0;
+                    var count=0;
+                    var timer=setInterval(function(){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                         async:false,
+                        dataType:"json",
+                        success:function(data){
+                            console.log(data);
+                            status=data.data.rows[0].status;
+                            answer=data.data.rows[0].answer;
+                            console.log(status);
+                        },
+                        error:function(jqXHR){
+                            console.log(jqXHR);
+                        }
+                    });
+                    count++;
+                    console.log(count);
+                    if(count>60){
+                        clearInterval(timer);
+                        answer="请求时间已超时！";
+                        console.log(timer);
+                        callback(answer);
+
+                    }
+                    if(status==1){
+                        clearInterval(timer);
+                        callback(Math.round(answer));
+                    }
+                },2000);
+                },
+                error:function(jqXHR){
+                    console.log(jqXHR);
+                    console.log(jqXHR.status);
+                }
+            });
+    };
     //
     // ext.faceDetect=function(name,action,fname,devId,callback){
     //     var descrp="";
@@ -532,20 +532,20 @@ new (function() {
     // };
     //
     // //获取设备个数
-    // ext.getDevice=function(callback){
-    //     $.ajax({
-    //         type:"GET",
-    //         url:"http://www.bit-dream.com/api/device_scR",
-    //         dataType:"json",
-    //         success:function(data){
-    //             console.log(data);
-    //             callback(data.data.count);
-    //         },
-    //         error:function(jqXHR){
-    //             console.log(jqXHR);
-    //         }
-    //     });
-    // };
+    ext.getDevice=function(callback){
+        $.ajax({
+            type:"GET",
+            url:"http://localhost:9000/api/scratch/device_scR",
+            dataType:"json",
+            success:function(data){
+                console.log(data);
+                callback(data.data.count);
+            },
+            error:function(jqXHR){
+                console.log(jqXHR);
+            }
+        });
+    };
     //
     // //获取设备id
     // ext.getDeviceId=function(index,callback){
@@ -706,141 +706,141 @@ new (function() {
     // };
     //
     // //读取引脚
-    // ext.getPin=function(name,pin,devId,callback){
-    //     var descrp="";
-    //     action="get";
-    //
-    //     if(name=="数字引脚"){
-    //         name="digitalRead";
-    //     }else{
-    //         name="analogRead";
-    //     }
-    //
-    //     descrp=action+" "+pin;
-    //     console.log(name+" "+descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 //devicename=data.data.name;
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(Math.round(answer));
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    //
-    // };
+    ext.getPin=function(name,pin,devId,callback){
+        var descrp="";
+        action="get";
+
+        if(name=="数字引脚"){
+            name="digitalRead";
+        }else{
+            name="analogRead";
+        }
+
+        descrp=action+" "+pin;
+        console.log(name+" "+descrp);
+        $.ajax({
+                type:"POST",
+                url:"http://localhost:9000/api/scratch/scodeC",
+                dataType:"json",
+                data:{
+                    name:name,
+                    descrption:descrp,
+                    device_id:devId
+                },
+                success:function(data){
+                    console.log(data);
+                    //devicename=data.data.name;
+                    var cmdId=data.data.id;
+                    var answer="";
+                    var status=0;
+                    var count=0;
+                    var timer=setInterval(function(){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                         async:false,
+                        dataType:"json",
+                        success:function(data){
+                            console.log(data);
+                            status=data.data.rows[0].status;
+                            answer=data.data.rows[0].answer;
+                            console.log(status);
+                        },
+                        error:function(jqXHR){
+                            console.log(jqXHR);
+                        }
+                    });
+                    count++;
+                    console.log(count);
+                    if(count>60){
+                        clearInterval(timer);
+                        answer="请求时间已超时！";
+                        console.log(timer);
+                        callback(answer);
+                    }
+                    if(status==1){
+                        clearInterval(timer);
+                        callback(Math.round(answer));
+                    }
+                },2000);
+                },
+                error:function(jqXHR){
+                    console.log(jqXHR);
+                    console.log(jqXHR.status);
+                }
+            });
+
+    };
     //
     // //设置引脚
-    // ext.setPin=function(name,pin,pin_val,devId,callback){
-    //     var descrp="";
-    //     action="set";
-    //
-    //     if(name=="数字引脚"){
-    //         if(pin_val!==0&&pin_val!==1){
-    //             callback("设置数字引脚的值只能为0或者1！");
-    //             return;
-    //         }
-    //         name="digitalWrite";
-    //     }else{
-    //         name="analogWrite";
-    //     }
-    //
-    //     descrp=action+" "+pin+" "+pin_val;
-    //     console.log(name+" "+descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 //devicename=data.data.name;
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(Math.round(answer));
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    // }
+    ext.setPin=function(name,pin,pin_val,devId,callback){
+        var descrp="";
+        action="set";
+
+        if(name=="数字引脚"){
+            if(pin_val!==0&&pin_val!==1){
+                callback("设置数字引脚的值只能为0或者1！");
+                return;
+            }
+            name="digitalWrite";
+        }else{
+            name="analogWrite";
+        }
+
+        descrp=action+" "+pin+" "+pin_val;
+        console.log(name+" "+descrp);
+        $.ajax({
+                type:"POST",
+                url:"http://localhost:9000/api/scratch/scodeC",
+                dataType:"json",
+                data:{
+                    name:name,
+                    descrption:descrp,
+                    device_id:devId
+                },
+                success:function(data){
+                    console.log(data);
+                    //devicename=data.data.name;
+                    var cmdId=data.data.id;
+                    var answer="";
+                    var status=0;
+                    var count=0;
+                    var timer=setInterval(function(){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                         async:false,
+                        dataType:"json",
+                        success:function(data){
+                            console.log(data);
+                            status=data.data.rows[0].status;
+                            answer=data.data.rows[0].answer;
+                            console.log(status);
+                        },
+                        error:function(jqXHR){
+                            console.log(jqXHR);
+                        }
+                    });
+                    count++;
+                    console.log(count);
+                    if(count>60){
+                        clearInterval(timer);
+                        answer="请求时间已超时！";
+                        console.log(timer);
+                        callback(answer);
+                    }
+                    if(status==1){
+                        clearInterval(timer);
+                        callback(Math.round(answer));
+                    }
+                },2000);
+                },
+                error:function(jqXHR){
+                    console.log(jqXHR);
+                    console.log(jqXHR.status);
+                }
+            });
+    }
     //
     // //语音识别
     // ext.soundDet=function(file_name,devId,callback){
@@ -965,68 +965,68 @@ new (function() {
     // }
     //
     // //pwm
-    // ext.pwmSet=function(pin,pin_val,devId,callback){
-    //     var descrp="";
-    //     var name="pwm";
-    //     var action="set";
-    //
-    //     if(pin_val<0||pin_val>255){
-    //         callback("请输入0-255之间的引脚值！");
-    //         return;
-    //     }
-    //     descrp=action+" "+pin+" "+pin_val;
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(answer);
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    //
-    // }
+    ext.pwmSet=function(pin,pin_val,devId,callback){
+        var descrp="";
+        var name="pwm";
+        var action="set";
+
+        if(pin_val<0||pin_val>255){
+            callback("请输入0-255之间的引脚值！");
+            return;
+        }
+        descrp=action+" "+pin+" "+pin_val;
+        $.ajax({
+                type:"POST",
+                url:"http://localhost:9000/api/scratch/scodeC",
+                dataType:"json",
+                data:{
+                    name:name,
+                    descrption:descrp,
+                    device_id:devId
+                },
+                success:function(data){
+                    console.log(data);
+                    var cmdId=data.data.id;
+                    var answer="";
+                    var status=0;
+                    var count=0;
+                    var timer=setInterval(function(){
+                    $.ajax({
+                        type:"GET",
+                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                         async:false,
+                        dataType:"json",
+                        success:function(data){
+                            console.log(data);
+                            status=data.data.rows[0].status;
+                            answer=data.data.rows[0].answer;
+                            console.log(status);
+                        },
+                        error:function(jqXHR){
+                            console.log(jqXHR);
+                        }
+                    });
+                    count++;
+                    console.log(count);
+                    if(count>60){
+                        clearInterval(timer);
+                        answer="请求时间已超时！";
+                        console.log(timer);
+                        callback(answer);
+                    }
+                    if(status==1){
+                        clearInterval(timer);
+                        callback(answer);
+                    }
+                },2000);
+                },
+                error:function(jqXHR){
+                    console.log(jqXHR);
+                    console.log(jqXHR.status);
+                }
+            });
+
+    }
     //
     // //发射红外线模块
     // ext.ir_set=function(pin,devId,callback){
@@ -1482,47 +1482,40 @@ new (function() {
     //         }
     //     });
     // };
-    var paramString = window.location.search.replace(/^\?|\/$/g, '');
-    var vars = paramString.split("&");
-    var lang = 'en';
-    for (var i=0; i<vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (pair.length > 1 && pair[0]=='lang')
-        lang = pair[1];
-    }
+
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['W', '指令名称 %m.name1 执行动作 %m.action1  引脚 %m.PIN1 设备号 %n', 'createCMD1', "led灯","开",0,1],
-            ['R', '指令名称 %m.name2 执行动作 %m.action2 引脚 %m.PIN2 设备号 %n', 'createCMD1', "土壤湿度","获取",0,1],
-            ['R', '指令名称 %m.name3 执行动作 %m.action3 遥控器名称 %m.zappername  按钮类型 %m.buttonname 设备号 %n', 'createCMD2', "红外线","发射","TV","电源",1],
-            ['R', '指令名称 %m.name4 执行动作 %m.action2 引脚 %m.PIN1 设备号 %n', 'createCMD1', "按键开关","获取",0,1],
-            ['R', '指令名称 %m.name5 执行动作 %m.action2  引脚 %m.PIN1 类型 %m.type 设备号 %n','createCMD3',"空气温湿度","获取",0,"温度",1],
-            ['R', '指令名称 %m.name6 执行动作 %m.action4 图片名 %s 设备号 %n','faceDetect',"人脸识别","人脸识别","",1],
+            ['R', '获取设备个数','getDevice'],
+            ['R', '获取第%n 个设备的设备号','getDeviceId',1],
+            ['w', '传感器： %m.name1 命令： %m.action1  引脚: D %m.PIN1 序列号： %n', 'createCMD1', "LED","开",0,0],
+            ['R', '传感器 %m.name2 命令%m.action2 引脚: A%m.PIN2 序列号 %n', 'createCMD1', "土壤湿度","获取",0,1],
+            //['R', '指令名称 %m.name3 执行动作 %m.action3 遥控器名称 %m.zappername  按钮类型 %m.buttonname 设备号 %n', 'createCMD2', "红外线","发射","TV","电源",1],
+            ['R', '传感器 %m.name4 命令 %m.action2 引脚: D %m.PIN1 序列号 %n', 'createCMD1', "按键开关","获取",0,1],
+            ['R', '传感器 %m.name5 命令 %m.action2  引脚: D %m.PIN1 类型 %m.type 序列号 %n','createCMD3',"空气温湿度","获取",0,"温度",1],
+            ['w', 'PWM模块 引脚 %n 引脚值 %n 序列号 %n','pwmSet', 0,0,1],
+            ['R', '读取%m.name9  引脚 %n 序列号 %n', 'getPin', "数字引脚",0,1],
+            ['R', '设置 %m.name9  引脚 %n 数值 %n 序列号 %n', 'setPin', "数字引脚",0,0,1],
+            /*['R', '指令名称 %m.name6 执行动作 %m.action4 图片名 %s 设备号 %n','faceDetect',"人脸识别","人脸识别","",1],
             ['R', '指令名称 %m.name7 执行动作 %m.action5 人名 %s 图片名 %s 设备号 %n','faceLearn',"人脸学习","学习","","",1],
             ['R', '指令名称 %m.name8 执行动作 %m.action6 设备号 %n','faceRec',"控制版块","打开摄像头",1],
             ['R', '手机号 %s 传感器类别 %s 传感器值 %s', 'sendMsgs','','',''],
-            ['R', '获取设备个数','getDevice'],
-            ['R', '获取第%n 个设备的设备号','getDeviceId',1],
             ['R', '天气预报 城市 %s   %m.day 天后  预报值%m.weather_data','weather_forecast',"beijing",0,"最高气温"],
-            ['R', '实时天气 城市 %s  查询值%m.weather_current','weather_cur',"beijing","天气状况"],
-            ['R', '读取引脚 引脚名称 %m.name9  引脚 %n 设备号 %n', 'getPin', "数字引脚",0,1],
-            ['R', '设置引脚 引脚名称 %m.name9  引脚 %n 引脚值 %n 设备号 %n', 'setPin', "数字引脚",0,0,1],
+            ['R', '实时天气 城市 %s  查询值%m.weather_current','weather_cur',"beijing","天气状况"],            
             ['R', '语音录音 设备号 %n', 'soundRec',1],
-            ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],
-            ['R', 'PWM模块 引脚 %n 引脚值 %n 设备号 %n','pwmSet', 0,0,1],
+            ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],      
             ['R', '语音合成 语音片段 %s 设备号 %n', 'audioSyn', '',1],
             ['R', '声音播放 文件名 %s 设备号 %n', 'soundPlay', '',1],
-            ['R', '发射红外线 引脚号 %n 设备号 %n','ir_set',0,1],
-            ['R', '移动机械手 X %n Y %n 设备号 %n', 'moveMachine', 100, 101, 1],
-            ['R', '点击遥控器 设备号 %n', 'clickRemote', 1],
-            ['R', '复位机械手 设备号 %n', 'resetMachine', 1],
-            ['R', 'ZX手势传感器 设备号 %n', 'ZXgesture', 1]
-        ],
+            //['R', '发射红外线 引脚号 %n 设备号 %n','ir_set',0,1],
+            //['R', '移动机械手 X %n Y %n 设备号 %n', 'moveMachine', 100, 101, 1],
+            //['R', '点击遥控器 设备号 %n', 'clickRemote', 1],
+            //['R', '复位机械手 设备号 %n', 'resetMachine', 1],
+            //['R', 'ZX手势传感器 设备号 %n', 'ZXgesture', 1]
+*/        ],
          menus: {
-          name1: ['继电器', 'led灯', '激光','七彩led灯'],
+          name1: ['继电器', 'LED', '激光','七彩led灯'],
           name2: ['土壤湿度','火焰','光敏','人体接触','烟雾'],
-          name3: ['红外线'],
+          //name3: ['红外线'],
           name4:['按键开关','水银开关','光遮断开关','倾斜开关','弹片开关','霍尔开关','震动开关','敲击开关','声音检测','温度','循迹','避障'],
           name5:['空气温湿度'],
           name6:['人脸识别'],
@@ -1536,7 +1529,7 @@ new (function() {
           action5:['学习'],
           action6:['打开摄像头','关闭摄像头','捕捉图像','初始化人脸识别','检测人脸','停止人脸检测'],
           PIN1:[0,1,2,3,4,5,6,7,8,9,10,11,12,13],
-          PIN2:[0,1,2,3,4,5],
+          PIN2:[0],
           zappername:['TV'],
           buttonname:['电源','音量加','音量减'],
           type:['温度','湿度'],
@@ -1544,14 +1537,13 @@ new (function() {
           weather_data:['相对湿度','能见度','最高气温','最低气温','风力','风向','风速','降水量','白天天气状况','夜间天气状况'],
           weather_current:['天气状况','体感温度','相对湿度','降水量','气压','温度','能见度','风向','风力','风速','空气质量','PM2.5']
         },
-        url:'http://liangdong21.github.io'
     };
 
     // Register the extension
-     ScratchExtensions.register('demo', descriptor, ext);
-//    $(document).on('ScratchExtensions:config',function(){
-//        ScratchExtensions.register('xx', descriptor, ext);
-//    })
+    // ScratchExtensions.register('demo', descriptor, ext);
+    $(document).on('ScratchExtensions:config',function(){
+        ScratchExtensions.register('中科极客', descriptor, ext);
+    })
     setTimeout(function(){
         $(document).trigger('ScratchExtensions:config')
     },2000)
