@@ -425,84 +425,89 @@ new (function() {
     //
     // };
     //
-    // ext.faceRec=function(name,action,devId,callback){
-    //     var descrp="";
-    //     if(name=="控制版块"){
-    //         name="face_detect";
-    //     }
-    //     if(action=="打开摄像头"){
-    //         action="start_camera";
-    //     }
-    //     if(action=="关闭摄像头"){
-    //         action="stop_camera";
-    //     }
-    //     if(action=="捕捉图像"){
-    //         action="capture_img";
-    //     }
-    //     if(action=="初始化人脸识别"){
-    //         action="init_face_detect";
-    //     }
-    //     if(action=="停止人脸检测"){
-    //         action="stop_detect_face";
-    //     }
-    //     if(action=="检测人脸"){
-    //         action="detect_face";
-    //     }
-    //     descrp=action;
-    //     console.log(descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 //devicename=data.data.name;
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(answer);
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    // };
+     ext.faceRec=function(name,action,devId,callback){
+         var descrp="";
+         if(name=="控制版块"){
+             name="face_detect";
+         }
+         if(action=="打开摄像头"){
+             action="start_camera";
+         }
+         if(action=="关闭摄像头"){
+             action="stop_camera";
+         }
+         if(action=="捕捉图像"){
+             action="capture_img";
+         }
+         if(action=="初始化人脸识别"){
+             action="init_face_detect";
+         }
+         if(action=="停止人脸检测"){
+             action="stop_detect_face";
+         }
+         if(action=="检测人脸"){
+             action="detect_face";
+         }
+         descrp=action;
+         console.log(descrp);
+         $.ajax({
+                 type:"POST",
+                 url:"http://localhost:9000/api/scratch/scodeD",
+                 dataType:"json",
+                 data:{
+                     name:name,
+                     descrption:descrp,
+                     device_id:devId
+                 },
+                 success:function(data){
+                	 
+                    console.log(data);
+                    
+                    
+                     //devicename=data.data.name;
+//                     var cmdId=data.data.id;
+                     var answer="";
+//                     var status=0;
+                     var count=0;
+                     var timer=setInterval(function(){
+                    	 
+//                     $.ajax({
+//                         type:"GET",
+//                         url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+//                          async:false,
+//                         dataType:"json",
+//                         success:function(data){
+//                             console.log(data);
+//                             status=data.data.rows[0].status;
+//                             answer=data.data.rows[0].answer;
+//                             console.log(status);
+//                         },
+//                         error:function(jqXHR){
+//                             console.log(jqXHR);
+//                         }
+//                     });
+                     count++;
+                     console.log(count);
+                     if(count>60){
+                         clearInterval(timer);
+                         answer="请求时间已超时！";
+                         console.log(timer);
+                         callback(answer);
+    
+                     }
+                     if(data.suc==1){
+                    	 answer="打开成功!";
+                         clearInterval(timer);
+                         callback(answer);
+                     }
+                 },2000);
+                 },
+                 error:function(jqXHR){
+                     console.log(jqXHR);
+                     console.log(jqXHR.status);
+                 }
+             });
+     };
     //
     // //发送预警短信
     // ext.sendMsgs=function(tel,category,val,callback){
@@ -1496,22 +1501,22 @@ new (function() {
             ['w', 'PWM模块 引脚 %n 引脚值 %n 序列号 %n','pwmSet', 0,0,1],
             ['R', '读取%m.name9  引脚 %n 序列号 %n', 'getPin', "数字引脚",0,1],
             ['R', '设置 %m.name9  引脚 %n 数值 %n 序列号 %n', 'setPin', "数字引脚",0,0,1],
-            /*['R', '指令名称 %m.name6 执行动作 %m.action4 图片名 %s 设备号 %n','faceDetect',"人脸识别","人脸识别","",1],
-            ['R', '指令名称 %m.name7 执行动作 %m.action5 人名 %s 图片名 %s 设备号 %n','faceLearn',"人脸学习","学习","","",1],
+//            ['R', '指令名称 %m.name6 执行动作 %m.action4 图片名 %s 设备号 %n','faceDetect',"人脸识别","人脸识别","",1],
+//            ['R', '指令名称 %m.name7 执行动作 %m.action5 人名 %s 图片名 %s 设备号 %n','faceLearn',"人脸学习","学习","","",1],
             ['R', '指令名称 %m.name8 执行动作 %m.action6 设备号 %n','faceRec',"控制版块","打开摄像头",1],
-            ['R', '手机号 %s 传感器类别 %s 传感器值 %s', 'sendMsgs','','',''],
-            ['R', '天气预报 城市 %s   %m.day 天后  预报值%m.weather_data','weather_forecast',"beijing",0,"最高气温"],
-            ['R', '实时天气 城市 %s  查询值%m.weather_current','weather_cur',"beijing","天气状况"],            
-            ['R', '语音录音 设备号 %n', 'soundRec',1],
-            ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],      
-            ['R', '语音合成 语音片段 %s 设备号 %n', 'audioSyn', '',1],
-            ['R', '声音播放 文件名 %s 设备号 %n', 'soundPlay', '',1],
+//            ['R', '手机号 %s 传感器类别 %s 传感器值 %s', 'sendMsgs','','',''],
+//            ['R', '天气预报 城市 %s   %m.day 天后  预报值%m.weather_data','weather_forecast',"beijing",0,"最高气温"],
+//            ['R', '实时天气 城市 %s  查询值%m.weather_current','weather_cur',"beijing","天气状况"],            
+//            ['R', '语音录音 设备号 %n', 'soundRec',1],
+//            ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],      
+//            ['R', '语音合成 语音片段 %s 设备号 %n', 'audioSyn', '',1],
+            //['R', '声音播放 文件名 %s 设备号 %n', 'soundPlay', '',1],
             //['R', '发射红外线 引脚号 %n 设备号 %n','ir_set',0,1],
             //['R', '移动机械手 X %n Y %n 设备号 %n', 'moveMachine', 100, 101, 1],
             //['R', '点击遥控器 设备号 %n', 'clickRemote', 1],
             //['R', '复位机械手 设备号 %n', 'resetMachine', 1],
             //['R', 'ZX手势传感器 设备号 %n', 'ZXgesture', 1]
-*/        ],
+        ],
          menus: {
           name1: ['继电器', 'LED', '激光','七彩led灯'],
           name2: ['土壤湿度','火焰','光敏','人体接触','烟雾'],
