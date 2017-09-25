@@ -72,7 +72,7 @@ new (function() {
         console.log(name+descrp);
         $.ajax({
                 type:"POST",
-                url:"http://localhost:9000/api/scratch/scodeC",
+                url:"makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -88,7 +88,7 @@ new (function() {
                     var timer=setInterval(function(){
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                        url:"makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
                          async:false,
                         dataType:"json",
                         success:function(data){
@@ -218,7 +218,7 @@ new (function() {
         console.log(descrp);
         $.ajax({
                 type:"POST",
-                url:"http://localhost:9000/api/scratch/scodeC",
+                url:"makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -235,7 +235,7 @@ new (function() {
                     var timer=setInterval(function(){
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                        url:"http://makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
                          async:false,
                         dataType:"json",
                         success:function(data){
@@ -270,87 +270,86 @@ new (function() {
             });
     };
     //
-    // ext.faceDetect=function(name,action,fname,devId,callback){
-    //     var descrp="";
-    //     if(name=="人脸识别"){
-    //         name="face_detect";
-    //     }
-    //     if(action=="人脸识别"){
-    //         action="identify_face";
-    //     }
-    //     if(action=="检测年龄"){
-    //         action="detect_age";
-    //     }
-    //     if(action=="检测性别"){
-    //         action="detect_gender";
-    //     }
-    //     if(action=="检测种族"){
-    //         action="detect_race";
-    //     }
-    //     if(action=="检测笑容程度"){
-    //         action="detect_smile";
-    //     }
-    //     if(fname==""){
-    //         callback("请填写图片名！");
-    //     }
-    //     if(fname!=""){
-    //         descrp=action+" "+fname;
-    //     console.log(descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 //devicename=data.data.name;
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(answer);
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    //     }
-    //
-    // };
+     ext.faceDetect=function(name,action,devId,callback){
+         var descrp="";
+         if(name=="人脸识别"){
+             name="face_detect";
+         }
+         if(action=="检测情绪"){
+             action="emotion";
+         }
+         if(action=="检测年龄"){
+             action="age";
+         }
+         if(action=="检测性别"){
+             action="gender";
+         }
+         if(action=="检测种族"){
+             action="ethnicity";
+         }
+         if(action=="检测笑容程度"){
+             action="smiling";
+         }
+         if(action=="检测颜值"){
+        	 action = "beauty";
+         }
+         descrp=action;
+         console.log(descrp);
+         $.ajax({
+                 type:"POST",
+                 url:"makers.iclass.cn/api/scratch/scodeC",
+                 dataType:"json",
+                 data:{
+                     name:name,
+                     descrption:descrp,
+                     device_id:devId
+                 },
+                 success:function(data){
+                     console.log(data);
+                     //devicename=data.data.name;
+                     var cmdId=data.data.id;
+                     var answer="";
+                     var status=0;
+                     var count=0;
+                     var timer=setInterval(function(){
+                     $.ajax({
+                         type:"GET",
+                         url:"makers.iclass.cn/api/scratch/scodeE?id="+cmdId,
+                          async:false,
+                         dataType:"json",
+                         success:function(data){
+                             console.log(data+"123");
+                             status=data.status;
+                             answer=data.answer;
+                             console.log(status);
+                         },
+                         error:function(jqXHR){
+                             console.log(jqXHR);
+                         }
+                     });
+                     count++;
+                     console.log(count);
+                     if(count>60){
+                         clearInterval(timer);
+                         answer="请求时间已超时！";
+                         console.log(timer);
+                         callback(answer);
+    
+                     }
+                     if(status==1){
+                         clearInterval(timer);
+                         callback(answer);
+                     }
+                 },2000);
+                 },
+                 error:function(jqXHR){
+                     console.log(jqXHR);
+                     console.log(jqXHR.status);
+                 }
+             });
+         
+    
+     };
     //
     // ext.faceLearn=function(name,action,uname,fname,devId,callback){
     //     var descrp="";
@@ -428,31 +427,19 @@ new (function() {
      ext.faceRec=function(name,action,devId,callback){
          var descrp="";
          if(name=="控制版块"){
-             name="face_detect";
+             name="control_model";
          }
          if(action=="打开摄像头"){
              action="start_camera";
          }
-         if(action=="关闭摄像头"){
-             action="stop_camera";
-         }
-         if(action=="捕捉图像"){
-             action="capture_img";
-         }
-         if(action=="初始化人脸识别"){
-             action="init_face_detect";
-         }
-         if(action=="停止人脸检测"){
-             action="stop_detect_face";
-         }
-         if(action=="检测人脸"){
-             action="detect_face";
+         if(action=="打开录音"){
+             action="start_record";
          }
          descrp=action;
          console.log(descrp);
          $.ajax({
                  type:"POST",
-                 url:"http://localhost:9000/api/scratch/scodeD",
+                 url:"makers.iclass.cn/api/scratch/scodeC",
                  dataType:"json",
                  data:{
                      name:name,
@@ -465,27 +452,27 @@ new (function() {
                     
                     
                      //devicename=data.data.name;
-//                     var cmdId=data.data.id;
+                     var cmdId=data.data.id;
                      var answer="";
 //                     var status=0;
                      var count=0;
                      var timer=setInterval(function(){
                     	 
-//                     $.ajax({
-//                         type:"GET",
-//                         url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
-//                          async:false,
-//                         dataType:"json",
-//                         success:function(data){
-//                             console.log(data);
-//                             status=data.data.rows[0].status;
-//                             answer=data.data.rows[0].answer;
-//                             console.log(status);
-//                         },
-//                         error:function(jqXHR){
-//                             console.log(jqXHR);
-//                         }
-//                     });
+                     $.ajax({
+                         type:"GET",
+                         url:"makers.iclass.cn/api/scratch/scodeD?id="+cmdId,
+                          async:false,
+                         dataType:"json",
+                         success:function(data){
+                             console.log(data);
+                             status=data.status;
+                             answer=data.answer;
+                             console.log(status);
+                         },
+                         error:function(jqXHR){
+                             console.log(jqXHR);
+                         }
+                     });
                      count++;
                      console.log(count);
                      if(count>60){
@@ -495,8 +482,7 @@ new (function() {
                          callback(answer);
     
                      }
-                     if(data.suc==1){
-                    	 answer="打开成功!";
+                     if(status==1){
                          clearInterval(timer);
                          callback(answer);
                      }
@@ -540,7 +526,7 @@ new (function() {
     ext.getDevice=function(callback){
         $.ajax({
             type:"GET",
-            url:"http://localhost:9000/api/scratch/device_scR",
+            url:"makers.iclass.cn/api/scratch/device_scR",
             dataType:"json",
             success:function(data){
                 console.log(data);
@@ -847,67 +833,67 @@ new (function() {
             });
     }
     //
-    // //语音识别
-    // ext.soundDet=function(file_name,devId,callback){
-    //     var descrp="";
-    //     var name="sound_detect";
-    //     var action="sound_identify";
-    //
-    //
-    //     descrp=action+" "+file_name;
-    //     console.log(name+" "+descrp);
-    //     $.ajax({
-    //             type:"POST",
-    //             url:"http://www.bit-dream.com/api/scodeC",
-    //             dataType:"json",
-    //             data:{
-    //                 name:name,
-    //                 descrption:descrp,
-    //                 device_id:devId
-    //             },
-    //             success:function(data){
-    //                 console.log(data);
-    //                 var cmdId=data.data.id;
-    //                 var answer="";
-    //                 var status=0;
-    //                 var count=0;
-    //                 var timer=setInterval(function(){
-    //                 $.ajax({
-    //                     type:"GET",
-    //                     url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                      async:false,
-    //                     dataType:"json",
-    //                     success:function(data){
-    //                         console.log(data);
-    //                         status=data.data.rows[0].status;
-    //                         answer=data.data.rows[0].answer;
-    //                         console.log(status);
-    //                     },
-    //                     error:function(jqXHR){
-    //                         console.log(jqXHR);
-    //                     }
-    //                 });
-    //                 count++;
-    //                 console.log(count);
-    //                 if(count>60){
-    //                     clearInterval(timer);
-    //                     answer="请求时间已超时！";
-    //                     console.log(timer);
-    //                     callback(answer);
-    //                 }
-    //                 if(status==1){
-    //                     clearInterval(timer);
-    //                     callback(answer);
-    //                 }
-    //             },2000);
-    //             },
-    //             error:function(jqXHR){
-    //                 console.log(jqXHR);
-    //                 console.log(jqXHR.status);
-    //             }
-    //         });
-    // }
-    //
+     //语音识别
+     ext.soundDet=function(file_name,devId,callback){
+         var descrp="";
+         var name="sound_detect";
+         var action="sound_identify";
+    
+    
+         descrp=file_name;
+         console.log(name+" "+descrp);
+         $.ajax({
+                 type:"POST",
+                 url:"makers.iclass.cn/api/scratch/scodeC",
+                 dataType:"json",
+                 data:{
+                     name:name,
+                     descrption:descrp,
+                     device_id:devId
+                 },
+                 success:function(data){
+                     console.log(data);
+                     var cmdId=data.data.id;
+                     var answer="";
+                     var status=0;
+                     var count=0;
+                     var timer=setInterval(function(){
+                     $.ajax({
+                         type:"GET",
+                         url:"makers.iclass.cn/api/scratch/scodeG?id="+cmdId,
+                          async:false,
+                         dataType:"json",
+                         success:function(data){
+                             console.log(data);
+                             status=data.status;
+                             answer=data.answer;
+                             console.log(status);
+                         },
+                         error:function(jqXHR){
+                             console.log(jqXHR);
+                         }
+                     });
+                     count++;
+                     console.log(count);
+                     if(count>60){
+                         clearInterval(timer);
+                         answer="请求时间已超时！";
+                         console.log(timer);
+                         callback(answer);
+                     }
+                     if(status==1){
+                         clearInterval(timer);
+                         callback(answer);
+                     }
+                 },2000);
+                 },
+                 error:function(jqXHR){
+                     console.log(jqXHR);
+                     console.log(jqXHR.status);
+                 }
+             });
+     }
+    
     // //语音录音
     // ext.soundRec=function(devId,callback){
     //     var descrp="";
@@ -1093,74 +1079,70 @@ new (function() {
     //         });
     // }
     // //语音合成
-    // ext.audioSyn = function (para, devId, callback) {
-    //     var descrp='';
-    //     var name = 'text2audio';
-    //     var action = 'text2audio';
-    //     if (para === '') {
-    //         callback('语音合成片段不能为空！');
-    //     }
-    //     else {
-    //         var chFlag = isChn(para);
-    //         if (!chFlag) {
-    //             callback('请输入中文！');
-    //         }
-    //         else {
-    //             descrp = action + ' ' + para;
-    //             console.log(name + descrp);
-    //             $.ajax({
-    //                 type:"POST",
-    //                 url:"http://www.bit-dream.com/api/scodeC",
-    //                 dataType:"json",
-    //                 data:{
-    //                     name:name,
-    //                     descrption:descrp,
-    //                     device_id:devId
-    //                 },
-    //                 success:function(data){
-    //                     console.log(data);
-    //                     var cmdId=data.data.id;
-    //                     var answer="";
-    //                     var status=0;
-    //                     var count=0;
-    //                     var timer=setInterval(function(){
-    //                         $.ajax({
-    //                             type:"GET",
-    //                             url:"http://www.bit-dream.com/api/scode_scratchR?id="+cmdId,
-    //                             async:false,
-    //                             dataType:"json",
-    //                             success:function(data){
-    //                                 console.log(data);
-    //                                 status=data.data.rows[0].status;
-    //                                 answer=data.data.rows[0].answer;
-    //                                 console.log(status);
-    //                             },
-    //                             error:function(jqXHR){
-    //                                 console.log(jqXHR);
-    //                             }
-    //                         });
-    //                         count++;
-    //                         console.log(count);
-    //                         if(count>60){
-    //                             clearInterval(timer);
-    //                             answer="请求时间已超时！";
-    //                             console.log(timer);
-    //                             callback(answer);
-    //                         }
-    //                         if(status==1){
-    //                             clearInterval(timer);
-    //                             callback(answer);
-    //                         }
-    //                     },2000);
-    //                 },
-    //                 error:function(jqXHR){
-    //                     console.log(jqXHR);
-    //                     console.log(jqXHR.status);
-    //                 }
-    //             });
-    //         }
-    //     }
-    // }
+     ext.audioSyn = function (para, devId, callback) {
+         var descrp='';
+         var name = 'text2audio';
+         var action = 'text2audio';
+         if (para == '') {
+             callback('语音合成片段不能为空！');
+         }
+         else {
+        	 console.log(para);
+             
+                 descrp = para;
+                 $.ajax({
+                     type:"POST",
+                     url:"makers.iclass.cn/api/scratch/scodeC",
+                     dataType:"json",
+                     data:{
+                         name:name,
+                         descrption:descrp,
+                         device_id:devId
+                     },
+                     success:function(data){
+                         console.log(data);
+                         var cmdId=data.data.id;
+                         var answer="";
+                         var status=0;
+                         var count=0;
+                         var timer=setInterval(function(){
+                             $.ajax({
+                                 type:"GET",
+                                 url:"makers.iclass.cn/api/scratch/scodeF?id="+cmdId,
+                                 async:false,
+                                 dataType:"json",
+                                 success:function(data){
+                                     console.log(data);
+                                     status=data.status;
+                                     answer=data.answer;
+                                     console.log(status);
+                                 },
+                                 error:function(jqXHR){
+                                     console.log(jqXHR);
+                                 }
+                             });
+                             count++;
+                             console.log(count);
+                             if(count>60){
+                                 clearInterval(timer);
+                                 answer="请求时间已超时！";
+                                 console.log(timer);
+                                 callback(answer);
+                             }
+                             if(status==1){
+                                 clearInterval(timer);
+                                 callback(answer);
+                             }
+                         },2000);
+                     },
+                     error:function(jqXHR){
+                         console.log(jqXHR);
+                         console.log(jqXHR.status);
+                     }
+                 });
+             
+         }
+     }
     //
     // //声音播放
     // ext.soundPlay = function (para, devId, callback) {
@@ -1501,15 +1483,15 @@ new (function() {
             ['w', 'PWM模块 引脚 %n 引脚值 %n 序列号 %n','pwmSet', 0,0,1],
             ['R', '读取%m.name9  引脚 %n 序列号 %n', 'getPin', "数字引脚",0,1],
             ['R', '设置 %m.name9  引脚 %n 数值 %n 序列号 %n', 'setPin', "数字引脚",0,0,1],
-//            ['R', '指令名称 %m.name6 执行动作 %m.action4 图片名 %s 设备号 %n','faceDetect',"人脸识别","人脸识别","",1],
+            ['R', '指令名称 %m.name6 执行动作 %m.action4  设备号 %n','faceDetect',"人脸识别","检测情绪",1],
 //            ['R', '指令名称 %m.name7 执行动作 %m.action5 人名 %s 图片名 %s 设备号 %n','faceLearn',"人脸学习","学习","","",1],
             ['R', '指令名称 %m.name8 执行动作 %m.action6 设备号 %n','faceRec',"控制版块","打开摄像头",1],
 //            ['R', '手机号 %s 传感器类别 %s 传感器值 %s', 'sendMsgs','','',''],
 //            ['R', '天气预报 城市 %s   %m.day 天后  预报值%m.weather_data','weather_forecast',"beijing",0,"最高气温"],
 //            ['R', '实时天气 城市 %s  查询值%m.weather_current','weather_cur',"beijing","天气状况"],            
 //            ['R', '语音录音 设备号 %n', 'soundRec',1],
-//            ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],      
-//            ['R', '语音合成 语音片段 %s 设备号 %n', 'audioSyn', '',1],
+            ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],      
+            ['R', '语音合成 语音片段 %s 设备号 %n', 'audioSyn', '',1],
             //['R', '声音播放 文件名 %s 设备号 %n', 'soundPlay', '',1],
             //['R', '发射红外线 引脚号 %n 设备号 %n','ir_set',0,1],
             //['R', '移动机械手 X %n Y %n 设备号 %n', 'moveMachine', 100, 101, 1],
@@ -1530,9 +1512,9 @@ new (function() {
           action1:['开','关'],
           action2:['获取'],
           action3:['发射'],
-          action4:['人脸识别','检测年龄','检测性别','检测种族','检测笑容程度'],
+          action4:['检测情绪','检测年龄','检测性别','检测种族','检测笑容程度','检测颜值'],
           action5:['学习'],
-          action6:['打开摄像头','关闭摄像头','捕捉图像','初始化人脸识别','检测人脸','停止人脸检测'],
+          action6:['打开摄像头','打开录音'],
           PIN1:[0,1,2,3,4,5,6,7,8,9,10,11,12,13],
           PIN2:[0],
           zappername:['TV'],
