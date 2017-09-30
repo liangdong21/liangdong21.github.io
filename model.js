@@ -25,7 +25,7 @@ new (function() {
         if(name=="继电器"){
             name="relay";
         }
-        if(name=="led灯"){
+        if(name=="LED"){
             name="led";
         }
         if(name=="激光"){
@@ -72,7 +72,7 @@ new (function() {
         console.log(name+descrp);
         $.ajax({
                 type:"POST",
-                url:"makers.iclass.cn/api/scratch/scodeC",
+                url:"http://makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -88,7 +88,7 @@ new (function() {
                     var timer=setInterval(function(){
                     $.ajax({
                         type:"GET",
-                        url:"makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
+                        url:"http://makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
                          async:false,
                         dataType:"json",
                         success:function(data){
@@ -218,7 +218,7 @@ new (function() {
         console.log(descrp);
         $.ajax({
                 type:"POST",
-                url:"makers.iclass.cn/api/scratch/scodeC",
+                url:"http://makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -270,7 +270,7 @@ new (function() {
             });
     };
     //
-     ext.faceDetect=function(name,action,devId,callback){
+     ext.faceDetect=function(name,file_name,action,devId,callback){
          var descrp="";
          if(name=="人脸识别"){
              name="face_detect";
@@ -297,7 +297,7 @@ new (function() {
          console.log(descrp);
          $.ajax({
                  type:"POST",
-                 url:"makers.iclass.cn/api/scratch/scodeC",
+                 url:"http://makers.iclass.cn/api/scratch/scodeC",
                  dataType:"json",
                  data:{
                      name:name,
@@ -314,7 +314,7 @@ new (function() {
                      var timer=setInterval(function(){
                      $.ajax({
                          type:"GET",
-                         url:"makers.iclass.cn/api/scratch/scodeE?id="+cmdId,
+                         url:"http://makers.iclass.cn/api/scratch/scodeE?id="+cmdId+"&filename="+file_name,
                           async:false,
                          dataType:"json",
                          success:function(data){
@@ -424,22 +424,46 @@ new (function() {
     //
     // };
     //
+  
+     
      ext.faceRec=function(name,action,devId,callback){
          var descrp="";
+         var answer="";
          if(name=="控制版块"){
              name="control_model";
          }
          if(action=="打开摄像头"){
              action="start_camera";
+             answer= new Date().getDate();
+             layer.open({
+        		 type: 2,
+        		  skin: 'layui-layer-rim', //加上边框
+        		  area: ['750px', '430px'], //宽高
+        		  title:'摄像头',
+        		  content: '/ScratchController/camera',
+        		  btn: ['确定', '取消'],  
+        		  yes:function(index){
+        			  
+        			  layer.close(index);
+        	        },
+        	        no:function(index){
+        	        	
+        	            layer.close(index);
+        	        }
+            })
+            callback(answer);
          }
          if(action=="打开录音"){
              action="start_record";
+             ScratchSound();
+             answer = new Date().getDate();
+             callback(answer);
          }
          descrp=action;
          console.log(descrp);
-         $.ajax({
+         /*$.ajax({
                  type:"POST",
-                 url:"makers.iclass.cn/api/scratch/scodeC",
+                 url:"http://makers.iclass.cn/api/scratch/scodeC",
                  dataType:"json",
                  data:{
                      name:name,
@@ -460,7 +484,7 @@ new (function() {
                     	 
                      $.ajax({
                          type:"GET",
-                         url:"makers.iclass.cn/api/scratch/scodeD?id="+cmdId,
+                         url:"http://makers.iclass.cn/api/scratch/scodeD?id="+cmdId,
                           async:false,
                          dataType:"json",
                          success:function(data){
@@ -492,7 +516,7 @@ new (function() {
                      console.log(jqXHR);
                      console.log(jqXHR.status);
                  }
-             });
+             });*/
      };
     //
     // //发送预警短信
@@ -526,7 +550,7 @@ new (function() {
     ext.getDevice=function(callback){
         $.ajax({
             type:"GET",
-            url:"makers.iclass.cn/api/scratch/device_scR",
+            url:"http://makers.iclass.cn/api/scratch/device_scR",
             dataType:"json",
             success:function(data){
                 console.log(data);
@@ -711,7 +735,7 @@ new (function() {
         console.log(name+" "+descrp);
         $.ajax({
                 type:"POST",
-                url:"http://localhost:9000/api/scratch/scodeC",
+                url:"http://makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -728,7 +752,7 @@ new (function() {
                     var timer=setInterval(function(){
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                        url:"http://makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
                          async:false,
                         dataType:"json",
                         success:function(data){
@@ -782,7 +806,7 @@ new (function() {
         console.log(name+" "+descrp);
         $.ajax({
                 type:"POST",
-                url:"http://localhost:9000/api/scratch/scodeC",
+                url:"http://makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -799,7 +823,7 @@ new (function() {
                     var timer=setInterval(function(){
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                        url:"http://makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
                          async:false,
                         dataType:"json",
                         success:function(data){
@@ -844,7 +868,7 @@ new (function() {
          console.log(name+" "+descrp);
          $.ajax({
                  type:"POST",
-                 url:"makers.iclass.cn/api/scratch/scodeC",
+                 url:"http://makers.iclass.cn/api/scratch/scodeC",
                  dataType:"json",
                  data:{
                      name:name,
@@ -860,7 +884,7 @@ new (function() {
                      var timer=setInterval(function(){
                      $.ajax({
                          type:"GET",
-                         url:"makers.iclass.cn/api/scratch/scodeG?id="+cmdId,
+                         url:"http://makers.iclass.cn/api/scratch/scodeG?id="+cmdId,
                           async:false,
                          dataType:"json",
                          success:function(data){
@@ -968,7 +992,7 @@ new (function() {
         descrp=action+" "+pin+" "+pin_val;
         $.ajax({
                 type:"POST",
-                url:"http://localhost:9000/api/scratch/scodeC",
+                url:"http://makers.iclass.cn/api/scratch/scodeC",
                 dataType:"json",
                 data:{
                     name:name,
@@ -984,7 +1008,7 @@ new (function() {
                     var timer=setInterval(function(){
                     $.ajax({
                         type:"GET",
-                        url:"http://localhost:9000/api/scratch/scode_scratchR?id="+cmdId,
+                        url:"http://makers.iclass.cn/api/scratch/scode_scratchR?id="+cmdId,
                          async:false,
                         dataType:"json",
                         success:function(data){
@@ -1092,7 +1116,7 @@ new (function() {
                  descrp = para;
                  $.ajax({
                      type:"POST",
-                     url:"makers.iclass.cn/api/scratch/scodeC",
+                     url:"http://makers.iclass.cn/api/scratch/scodeC",
                      dataType:"json",
                      data:{
                          name:name,
@@ -1108,13 +1132,17 @@ new (function() {
                          var timer=setInterval(function(){
                              $.ajax({
                                  type:"GET",
-                                 url:"makers.iclass.cn/api/scratch/scodeF?id="+cmdId,
+                                 url:"http://makers.iclass.cn/api/scratch/scodeF?id="+cmdId,
                                  async:false,
                                  dataType:"json",
                                  success:function(data){
                                      console.log(data);
                                      status=data.status;
                                      answer=data.answer;
+                                     var audio = new Audio(answer);
+                                     answer="合成成功";
+                                     audio.play();
+                                  
                                      console.log(status);
                                  },
                                  error:function(jqXHR){
@@ -1483,7 +1511,7 @@ new (function() {
             ['w', 'PWM模块 引脚 %n 引脚值 %n 序列号 %n','pwmSet', 0,0,1],
             ['R', '读取%m.name9  引脚 %n 序列号 %n', 'getPin', "数字引脚",0,1],
             ['R', '设置 %m.name9  引脚 %n 数值 %n 序列号 %n', 'setPin', "数字引脚",0,0,1],
-            ['R', '指令名称 %m.name6 执行动作 %m.action4  设备号 %n','faceDetect',"人脸识别","检测情绪",1],
+            ['R', '指令名称 %m.name6 图片名称%s 执行动作 %m.action4  设备号 %n','faceDetect',"人脸识别","","检测情绪",1],
 //            ['R', '指令名称 %m.name7 执行动作 %m.action5 人名 %s 图片名 %s 设备号 %n','faceLearn',"人脸学习","学习","","",1],
             ['R', '指令名称 %m.name8 执行动作 %m.action6 设备号 %n','faceRec',"控制版块","打开摄像头",1],
 //            ['R', '手机号 %s 传感器类别 %s 传感器值 %s', 'sendMsgs','','',''],
