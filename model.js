@@ -270,7 +270,7 @@ new (function() {
             });
     };
     //
-     ext.faceDetect=function(name,file_name,action,devId,callback){
+     ext.faceDetect=function(name,action,devId,callback){
          var descrp="";
          if(name=="人脸识别"){
              name="face_detect";
@@ -314,7 +314,7 @@ new (function() {
                      var timer=setInterval(function(){
                      $.ajax({
                          type:"GET",
-                         url:"http://makers.iclass.cn/api/scratch/scodeE?id="+cmdId+"&filename="+file_name,
+                         url:"http://makers.iclass.cn/api/scratch/scodeE?id="+cmdId,
                           async:false,
                          dataType:"json",
                          success:function(data){
@@ -560,6 +560,59 @@ new (function() {
                 console.log(jqXHR);
             }
         });
+    };
+    
+    ext.uploadPhoto=function(callback){
+    	layer.open({
+  		  type: 1,
+  		  skin: 'layui-layer-rim', //加上边框
+  		  area: ['480px', '180px'], //宽高
+  		  title:'上传照片',
+  		  content: '<form name = "form" id = "form" method = "post" action = "/ScratchController/UploadPhoto" enctype="multipart/form-data">'+
+  		  
+  		  '<a href="javascript:;" class="a-upload">'+
+  		  '<input type="file" name="coverpage" id="Uploadcoverpage" onchange="getcoverpagename(this);" accept=".png,.jpg" >上传照片'+
+  		  '<input type="hidden" name=pageType value="image">'+
+  		  '</a>'+
+ 
+  		  '</form>',
+  		  btn: ['确定', '取消'],  
+  		  yes:function(index){
+  			  submitForm();		  
+  	        },
+  	        no:function(index){
+  	        	callback("no");
+  	            layer.close(index);
+  	            
+  	        }
+  		});
+    	callback("");
+    };
+    ext.uploadSpeech=function(callback){
+    	layer.open({
+  		  type: 1,
+  		  skin: 'layui-layer-rim', //加上边框
+  		  area: ['480px', '180px'], //宽高
+  		  title:'上传语音',
+  		  content: '<form name = "form" id = "form" method = "post" action = "/ScratchController/UploadSpeech" enctype="multipart/form-data">'+
+  		  
+  		  '<a href="javascript:;" class="a-upload">'+
+  		  '<input type="file" name="file" id="Uploadcoverpage" onchange="getfilename();" accept=".wav" >上传语音'+
+  		  '<input type="hidden" name=pageType value="image">'+
+  		  '</a>'+
+ 
+  		  '</form>',
+  		  btn: ['确定', '取消'],  
+  		  yes:function(index){
+  			  submitForm();		  
+  	        },
+  	        no:function(index){
+  	        	callback("no");
+  	            layer.close(index);
+  	            
+  	        }
+  		});
+    	callback("");
     };
     //
     // //获取设备id
@@ -1511,7 +1564,7 @@ new (function() {
             ['w', 'PWM模块 引脚 %n 引脚值 %n 序列号 %n','pwmSet', 0,0,1],
             ['R', '读取%m.name9  引脚 %n 序列号 %n', 'getPin', "数字引脚",0,1],
             ['R', '设置 %m.name9  引脚 %n 数值 %n 序列号 %n', 'setPin', "数字引脚",0,0,1],
-            ['R', '指令名称 %m.name6 图片名称%s 执行动作 %m.action4  设备号 %n','faceDetect',"人脸识别","","检测情绪",1],
+            ['R', '指令名称 %m.name6  执行动作 %m.action4  设备号 %n','faceDetect',"人脸识别","检测情绪",1],
 //            ['R', '指令名称 %m.name7 执行动作 %m.action5 人名 %s 图片名 %s 设备号 %n','faceLearn',"人脸学习","学习","","",1],
             ['R', '指令名称 %m.name8 执行动作 %m.action6 设备号 %n','faceRec',"控制版块","打开摄像头",1],
 //            ['R', '手机号 %s 传感器类别 %s 传感器值 %s', 'sendMsgs','','',''],
@@ -1520,6 +1573,8 @@ new (function() {
 //            ['R', '语音录音 设备号 %n', 'soundRec',1],
             ['R', '语音识别 文件名 %s 设备号 %n', 'soundDet',"",1],      
             ['R', '语音合成 语音片段 %s 设备号 %n', 'audioSyn', '',1],
+            ['w', '上传照片','uploadPhoto'],
+            ['w', '上传语音','uploadSpeech'],
             //['R', '声音播放 文件名 %s 设备号 %n', 'soundPlay', '',1],
             //['R', '发射红外线 引脚号 %n 设备号 %n','ir_set',0,1],
             //['R', '移动机械手 X %n Y %n 设备号 %n', 'moveMachine', 100, 101, 1],
